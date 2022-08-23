@@ -56,6 +56,12 @@ const DOMLOADEDBOX_CHECKED = function (checkBoxesController, codeMirror, htmlEle
 };
 
 const TRIGGER_TYPE = function (checkBoxesController, codeMirror, htmlElements) {
+    if (checkBoxesController.triggerType === 'no-trigger') {
+        codeMirror.readOnly = true;
+
+        return;
+    }
+
     if (checkBoxesController.triggerType === 'event') {
         codeMirror.replaceRange(`document.querySelector('${htmlElements.selectorInputCss}').addEventListener('${htmlElements.eventTypeSelector}', function() {`, {line: 3});
         codeMirror.replaceRange('});', {line: 6})

@@ -80,6 +80,13 @@ function analyticsEvent() {
             eventTypeSelect.setAttribute('disabled', '');
             cssSelectorInput.setAttribute('disabled', '');
         }
+
+        if (triggerType.value === 'no-trigger') {
+            messageTypeSelect.setAttribute('disabled', '');
+            messageTextInput.setAttribute('disabled', '');
+            eventTypeSelect.setAttribute('disabled', '');
+            cssSelectorInput.setAttribute('disabled', '');
+        }
     });
 
     // evento para capturar mudança no checkbox de DOMContentLoaded
@@ -172,6 +179,12 @@ function analyticsEvent() {
             return;
         }
 
+        if (triggerType.value === 'no-trigger' && (!checkBoxesController.urlBoxChecked && !checkBoxesController.domContentLoadedChecked)) {
+            alert('Sem disparador definido, você deverá selecionar ou filtro de URL ou Dom Content Loaded!');
+            resetCodeMirror();
+            return;
+        }
+
         // fazendo uma identação do código javascript gerado dentro do editor de código
         const beautifiedCode = js_beautify(codeMirror.getValue());
 
@@ -182,6 +195,7 @@ function analyticsEvent() {
         const allParameters = Array.from(formAnalyticsEvent.querySelectorAll('span.parametersLine'));
         const parametersObj = {};
         const parametersCheck = {hasError: false, msg: ''};
+        let valueString = ``;
 
         if (!eventName) {
             alert('Para a geração do código, o nome do evento deve ser adicionado!');
@@ -189,34 +203,31 @@ function analyticsEvent() {
             return;
         }
 
-        if (allParameters.length === 0) {
-            alert('Para a geração do código, no mínimo 1 parâmetro deve ser adicionado!');
-            resetCodeMirror();
-            return;
-        }
-
-        allParameters.forEach(function(element) {
-            const parameterName = element.querySelector('input.parameterName').value;
-            const parameterValue = element.querySelector('input.parameterValue').value;
-
-            if (!parameterName || !parameterValue) {
-                parametersCheck.hasError = true;
-                parametersCheck.msg = 'Existe parâmetros em branco, favor fazer a correção!'
-                return;
-            }
-
-            const parametersKeys = Object.keys(parametersObj);
-
-            for (let i in parametersKeys) {
-                if (parametersKeys[i] === parameterName) {
+        if (allParameters.length > 0) {
+            allParameters.forEach(function(element) {
+                const parameterName = element.querySelector('input.parameterName').value;
+                const parameterValue = element.querySelector('input.parameterValue').value;
+    
+                if (!parameterName || !parameterValue) {
                     parametersCheck.hasError = true;
-                    parametersCheck.msg = 'Existe uma repetição de parâmetro! Corrija para prosseguir com a geração do código.'
+                    parametersCheck.msg = 'Existe parâmetros em branco, favor fazer a correção!'
                     return;
                 }
-            }
-            
-            parametersObj[parameterName] = parameterValue;
-        });
+    
+                const parametersKeys = Object.keys(parametersObj);
+    
+                for (let i in parametersKeys) {
+                    if (parametersKeys[i] === parameterName) {
+                        parametersCheck.hasError = true;
+                        parametersCheck.msg = 'Existe uma repetição de parâmetro! Corrija para prosseguir com a geração do código.'
+                        return;
+                    }
+                }
+                
+                parametersObj[parameterName] = parameterValue;
+                valueString += `${parameterName}: ${parameterValue},`;
+            });
+        }
 
         if (parametersCheck.hasError) {
             alert(parametersCheck.msg);
@@ -224,9 +235,15 @@ function analyticsEvent() {
             return;
         }
 
-        // colocando comentário no meio do editor de códigos
-        codeMirror.replaceRange(`
-            gtag('event', '${eventName}', ${js_beautify(JSON.stringify(parametersObj))});`, {line: (codeMirror.lineCount() / 2) - 1});
+        if (valueString) {
+            // colocando comentário no meio do editor de códigos
+            codeMirror.replaceRange(`
+            gtag('event', '${eventName}', ${js_beautify(`{  \n   ${valueString}  \n }`)});`, {line: (codeMirror.lineCount() / 2) - 1});
+        } else {
+            // colocando comentário no meio do editor de códigos
+            codeMirror.replaceRange(`
+            gtag('event', '${eventName}', {});`, {line: (codeMirror.lineCount() / 2) - 1});
+        }
 
         // deixando codigo mais bonito
         const allCode = js_beautify(codeMirror.getValue());

@@ -75,6 +75,13 @@ function adsConversionCode() {
             eventTypeSelect.setAttribute('disabled', '');
             cssSelectorInput.setAttribute('disabled', '');
         }
+
+        if (triggerType.value === 'no-trigger') {
+            messageTypeSelect.setAttribute('disabled', '');
+            messageTextInput.setAttribute('disabled', '');
+            eventTypeSelect.setAttribute('disabled', '');
+            cssSelectorInput.setAttribute('disabled', '');
+        }
     });
 
     // evento para capturar mudança no checkbox de DOMContentLoaded
@@ -164,6 +171,12 @@ function adsConversionCode() {
 
         if (!conversionConfigs.conversionId.value || !conversionConfigs.conversionLabel.value) {
             alert('Campo de conversion ID ou conversion label deve estar preenchido!');
+            resetCodeMirror();
+            return;
+        }
+
+        if (triggerType.value === 'no-trigger' && (!checkBoxesController.urlBoxChecked && !checkBoxesController.domContentLoadedChecked)) {
+            alert('Sem disparador definido, você deverá selecionar ou filtro de URL ou Dom Content Loaded!');
             resetCodeMirror();
             return;
         }

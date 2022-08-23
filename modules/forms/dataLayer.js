@@ -79,6 +79,13 @@ function dataLayer() {
             eventTypeSelect.setAttribute('disabled', '');
             cssSelectorInput.setAttribute('disabled', '');
         }
+
+        if (triggerType.value === 'no-trigger') {
+            messageTypeSelect.setAttribute('disabled', '');
+            messageTextInput.setAttribute('disabled', '');
+            eventTypeSelect.setAttribute('disabled', '');
+            cssSelectorInput.setAttribute('disabled', '');
+        }
     });
 
     // evento para capturar mudança no checkbox de DOMContentLoaded
@@ -168,6 +175,12 @@ function dataLayer() {
         // checando se os checkboxes de array, eventos e url estão ativos e com seus respectivos inputs preenchidos corretamente. 
         if ((checkBoxesController.eventBoxChecked || checkBoxesController.arrayBoxChecked) && htmlElements.selectorInputCss === '' || checkBoxesController.urlBoxChecked && htmlElements.urlTextSelector === '') {
             alert('Campo de seletor CSS ou de filtro de URL está ou estão vazios, verifique o preenchimento!');
+            resetCodeMirror();
+            return;
+        }
+
+        if (triggerType.value === 'no-trigger' && (!checkBoxesController.urlBoxChecked && !checkBoxesController.domContentLoadedChecked)) {
+            alert('Sem disparador definido, você deverá selecionar ou filtro de URL ou Dom Content Loaded!');
             resetCodeMirror();
             return;
         }

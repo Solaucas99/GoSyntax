@@ -37,6 +37,7 @@ function enhancedConversions() {
     const checkBoxesController = {
         urlBoxChecked: false,
         urlBoxCheckedEC: false,
+        triggerType: triggerType.value
     };
 
     // função para resetar o formulário após o envio do mesmo.
@@ -78,6 +79,13 @@ function enhancedConversions() {
         if (triggerType.value === 'body-message') {
             messageTypeSelect.hasAttribute('disabled') && messageTypeSelect.removeAttribute('disabled');
             messageTextInput.hasAttribute('disabled') && messageTextInput.removeAttribute('disabled');
+            eventTypeSelect.setAttribute('disabled', '');
+            cssSelectorInput.setAttribute('disabled', '');
+        }
+
+        if (triggerType.value === 'no-trigger') {
+            messageTypeSelect.setAttribute('disabled', '');
+            messageTextInput.setAttribute('disabled', '');
             eventTypeSelect.setAttribute('disabled', '');
             cssSelectorInput.setAttribute('disabled', '');
         }
@@ -169,6 +177,12 @@ function enhancedConversions() {
             return;
         }
 
+        if (triggerType.value === 'no-trigger' && !checkBoxesController.urlBoxChecked) {
+            alert('Sem disparador definido, você deverá selecionar o filtro de URL!');
+            resetCodeMirror();
+            return;
+        }
+
         // fazendo uma identação do código javascript gerado dentro do editor de código
         const beautifiedCode = js_beautify(codeMirror.getValue());
 
@@ -182,7 +196,7 @@ function enhancedConversions() {
                 dataLayer.push({
                     event: 'enhanced_conversion_form',
                     ec_data: {
-                        email: localStorage.getItem('ec_email');
+                        email: localStorage.getItem('ec_email'),
                     }
                 });
             `;
@@ -192,8 +206,8 @@ function enhancedConversions() {
                     dataLayer.push({
                         event: 'enhanced_conversion_form',
                         ec_data: {
-                            email: localStorage.getItem('ec_email');
-                            phone: localStorage.getItem('ec_phone');
+                            email: localStorage.getItem('ec_email'),
+                            phone: localStorage.getItem('ec_phone')
                         }
                     });
                 `

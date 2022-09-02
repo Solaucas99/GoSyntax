@@ -54,20 +54,15 @@ const EC_TYPE = function (checkBoxesController, codeMirror, htmlElements) {
                     return re.test(email);
                 }
 
-                var validatePhone = function (phone) {
-                    var filteredPhone = phone.replace(/\D/g,'');
-                    return filteredPhone.length >= 10 && filteredPhone.length <= 11;
-                }
-
                 email.addEventListener('input', function() {
                     if (validateEmail(email.value)) {
-                        localStorage.setItem('email_ec', email.value);
+                        localStorage.setItem('ec_email', email.value);
                     }
                 });
 
                 phone.addEventListener('input', function() {
                     if (validatePhone(phone.value)) {
-                        localStorage.setItem('phone_ec', area + phone.value.replace(/\D/g,''));
+                        localStorage.setItem('ec_phone', area + phone.value.replace(/\D/g,''));
                     }
                 })
             `;
@@ -88,7 +83,7 @@ const EC_TYPE = function (checkBoxesController, codeMirror, htmlElements) {
 
             email.addEventListener('input', function() {
                 if (validateEmail(email.value)) {
-                    localStorage.setItem('email_ec', email.value);
+                    localStorage.setItem('ec_email', email.value);
                 }
             });
         `;
@@ -118,13 +113,13 @@ const EC_TYPE = function (checkBoxesController, codeMirror, htmlElements) {
 
             email.addEventListener('input', function() {
                 if (validateEmail(email.value)) {
-                    localStorage.setItem('email_ec', email.value);
+                    localStorage.setItem('ec_email', email.value);
                 }
             });
 
             phone.addEventListener('input', function() {
                 if (validatePhone(phone.value)) {
-                    localStorage.setItem('phone_ec', area + phone.value.replace(/\D/g,''));
+                    localStorage.setItem('ec_phone', area + phone.value.replace(/\D/g,''));
                 }
             })
         `;
@@ -145,7 +140,7 @@ const EC_TYPE = function (checkBoxesController, codeMirror, htmlElements) {
 
             email.addEventListener('input', function() {
                 if (validateEmail(email.value)) {
-                    localStorage.setItem('email_ec', email.value);
+                    localStorage.setItem('ec_email', email.value);
                 }
             });
         `;

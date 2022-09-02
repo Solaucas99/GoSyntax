@@ -48,6 +48,8 @@ function enhancedConversions() {
         // zerando controllers dos checkboxes
         checkBoxesController.urlBoxChecked = false;
         checkBoxesController.urlBoxCheckedEC = false;
+        checkBoxesController.triggerType = triggerType.value;
+
 
         // desabilitando selects dentro do HTML
         eventTypeSelect.setAttribute('disabled', '');

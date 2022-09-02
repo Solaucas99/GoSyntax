@@ -73,6 +73,11 @@ fieldset {
     display: flex;
     flex-direction: column;
     flex: 1;
+    align-items: center;
+}
+
+fieldset div {
+    width: 90%;
 }
 
 fieldset.codeConfigs input {
@@ -91,13 +96,10 @@ fieldset#conversionConfigs input {
 
 input, select {
     padding: 5px;
-    border: none;
-    border-bottom: 2px solid green;
-    min-width: 130px;
+    min-width: 25%;
 }
 
 input:disabled, select:disabled {
-    border-bottom: 2px solid red;
     background: #d9d9d9;
 }
 
@@ -289,14 +291,6 @@ form#formAnalyticsEvent fieldset#dataLayerConfigs div.dataLayerObj  {
     margin-top: 5px;
 }
 
-
-/* form#formAnalyticsEvent fieldset#eventConfigs div.eventParameters div.parametersDiv,
-form#formAnalyticsEvent fieldset#dataLayerConfigs div.dataLayerObj div.objDiv {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-} */
-
 button#addParameter, 
 button#addKeyValue {
     margin: 5px 0px;
@@ -309,7 +303,7 @@ div.objDiv {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
-    height: 180px;
+    height: 280px;
     border: 1px solid black;
     font-size: 9px;
 }
@@ -356,15 +350,106 @@ div.enhanced-conversions-options {
 div.enhanced-conversions-options div {
     width: 100%;
     display: flex;
+    flex-direction: row;
     align-items: center;
 }
 
-div.enhanced-conversions-options label {
+div.enhanced-conversions-options label input {
     width: 80%;
+}
+
+/* Switch 1 Specific Styles Start */
+input[type="checkbox"].switch_1{
+	font-size: 15px;
+	-webkit-appearance: none;
+	   -moz-appearance: none;
+	        appearance: none;
+	width: 2.8em;
+	height: 1.3em;
+	background: #ddd;
+	border-radius: 3em;
+	position: relative;
+	cursor: pointer;
+	outline: none;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+    border: none;
+    padding: 0;
+    min-width: 0.5em;
+  }
+  
+  input[type="checkbox"].switch_1:checked{
+	background: #0ebeff;
+  }
+  
+  input[type="checkbox"].switch_1:after{
+	position: absolute;
+	content: "";
+	width: 1.3em;
+	height: 1.3em;
+	border-radius: 50%;
+	background: #fff;
+	-webkit-box-shadow: 0 0 .25em rgba(0,0,0,.3);
+	        box-shadow: 0 0 .25em rgba(0,0,0,.3);
+	-webkit-transform: scale(.7);
+	        transform: scale(.7);
+	left: 0;
+	-webkit-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+  }
+  
+  input[type="checkbox"].switch_1:checked:after{
+	left: calc(100% - 1.3em);
+  }
+
+  label.checkbox-trigger {
     display: flex;
+    align-items: center;
+  }
+	
+/* Switch 1 Specific Style End */
+div.label-input-field {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+}
+
+div.label-input-field label {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div.label-input-field span.title, 
+div.label-input-field input {
+    width: 45%;
+    min-width: 45%;
+}
+
+div.label-input-field select {
+    width: 55%;
+    min-width: 55%;
+}
+
+
+div.label-input-field-column {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5px;
     flex-direction: column;
 }
 
-div.enhanced-conversions-options label input {
-    width: 45%;
+div.label-input-field-column span.title, 
+div.label-input-field-column input {
+    width: 25%;
+    min-width: 25%;
+}
+
+div.label-input-field-column select {
+    width: 25%;
+    min-width: 25%;
 }

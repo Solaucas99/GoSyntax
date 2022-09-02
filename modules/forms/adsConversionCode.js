@@ -44,6 +44,7 @@ function adsConversionCode() {
         // zerando controllers dos checkboxes
         checkBoxesController.urlBoxChecked = false;
         checkBoxesController.domContentLoadedChecked = false;
+        checkBoxesController.triggerType = triggerType.value;
 
         // desabilitando selects dentro do HTML
         eventTypeSelect.setAttribute('disabled', '');
